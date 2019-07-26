@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cterblan <cterblan@student.wethinkcode>    +#+  +:+       +#+         #
+#    By: cterblan <cterblan@student>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/25 20:26:51 by cterblan          #+#    #+#              #
-#    Updated: 2019/07/25 21:42:27 by cterblan         ###   ########.fr        #
+#    Updated: 2019/07/26 12:17:19 by cterblan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ################################################################################
 
 AUTHOR = cterblan
-OUTPUT = nm.exe
+OUTPUT = nm
 
 ################################################################################
 
@@ -24,7 +24,10 @@ LIB_DIR = lib
 
 ###############################################################################
 
-SRC		:= nm.c
+SRC		:= nm.c\
+			start_nm.c\
+			ft_error.c
+			
 OBJ		:= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 ###############################################################################
@@ -42,9 +45,12 @@ all: update $(OUTPUT)
 
 $(OUTPUT): $(OBJ)
 	make all -C $(PRINTF_DIR)
-	gcc -o $(OUTPUT) $(OBJ)
+	@echo [COMPILING] $(OUTPUT)
+	gcc -o $(OUTPUT) $(OBJ) $(PRINTF_DIR)/libftprintf.a
+	@echo [Whoop] Pizza is on me!
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@echo [BUILDING] $@
 	#norminette $<
 	mkdir -p $(OBJ_DIR)
 	$(COMPILE) -I $(INC_DIR) -o $@ -c $<
