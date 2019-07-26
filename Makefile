@@ -6,7 +6,7 @@
 #    By: cterblan <cterblan@student>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/25 20:26:51 by cterblan          #+#    #+#              #
-#    Updated: 2019/07/26 12:17:19 by cterblan         ###   ########.fr        #
+#    Updated: 2019/07/26 12:48:57 by cterblan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INC_DIR = inc
 SRC_DIR = src
 OBJ_DIR = obj
 LIB_DIR = lib
+RES_DIR = resources
 
 ###############################################################################
 
@@ -76,6 +77,8 @@ workspace:
 	mkdir -p $(INC_DIR)
 	mkdir -p $(SRC_DIR)
 	mkdir -p $(LIB_DIR)
+	mkdir -p $(RES_DIR)
+	touch $(RES_DIR)/references.txt
 	touch author
 	echo $(AUTHOR) > author
 
