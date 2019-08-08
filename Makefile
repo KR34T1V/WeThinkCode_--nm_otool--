@@ -25,8 +25,8 @@ RES_DIR = resources
 
 ###############################################################################
 
-SRC		:= nm.c\
-			start_nm.c\
+SRC		:= nm_main.c\
+			nm_nm.c\
 			ft_error.c
 			
 OBJ		:= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
