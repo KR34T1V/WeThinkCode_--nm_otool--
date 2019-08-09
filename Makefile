@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cterblan <cterblan@student>                +#+  +:+       +#+         #
+#    By: cterblan <cterblan@student.wethinkcode>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/25 20:26:51 by cterblan          #+#    #+#              #
-#    Updated: 2019/07/26 12:48:57 by cterblan         ###   ########.fr        #
+#    Updated: 2019/08/09 08:18:41 by cterblan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,7 @@ RES_DIR = resources
 
 ###############################################################################
 
-SRC		:= nm_main.c\
-			nm_nm.c\
-			ft_error.c
+SRC		:= nm_main.c
 			
 OBJ		:= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
