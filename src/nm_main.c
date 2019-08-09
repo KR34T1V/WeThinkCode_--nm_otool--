@@ -6,11 +6,27 @@
 /*   By: cterblan <cterblan@student.wethinkcode>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 22:05:35 by cterblan          #+#    #+#             */
-/*   Updated: 2019/08/09 08:35:39 by cterblan         ###   ########.fr       */
+/*   Updated: 2019/08/09 09:38:59 by cterblan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
+void print_output(int nsyms, int symoff, int stroff, char *ptr){
+    int i;
+    char *stringtable;
+    struct nlist_64 *array;
+
+    array = (void *)ptr + symoff;
+    stringtable = (void *)ptr + stroff;
+
+    i = 0;
+    while (i < nsyms){
+        //ft_printf("Here %s %ld\n", stroff ,array[i].n_un.n_strx);
+        printf("%s\n", stroff + array[i].n_un.n_strx);
+        i++;
+    }
+}
+
 void handle_64(char *ptr){
     uint32_t ncmds;
     uint32_t i;
@@ -27,6 +43,7 @@ void handle_64(char *ptr){
         if (lc->cmd == LC_SYMTAB){
             sym = (struct symtab_command *) lc;
             ft_printf("symboles = %d\n", sym->nsyms);
+            print_output(sym->nsyms, sym->symoff, sym->stroff, ptr);
             break;
         }
         lc = (void *)lc + lc->cmdsize;

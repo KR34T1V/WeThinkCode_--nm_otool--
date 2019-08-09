@@ -6,13 +6,20 @@
 #    By: cterblan <cterblan@student.wethinkcode>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/25 20:26:51 by cterblan          #+#    #+#              #
-#    Updated: 2019/08/09 08:18:41 by cterblan         ###   ########.fr        #
+#    Updated: 2019/08/09 09:40:20 by cterblan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ################################################################################
 
 AUTHOR = cterblan
+GITIGNORE = "*.o\n\
+			.DS_Store\n\
+			lib/*\n\
+			*.exe\n\
+			nm\n\
+			otool\n"
+
 OUTPUT = nm
 
 ################################################################################
@@ -79,6 +86,12 @@ workspace:
 	touch $(RES_DIR)/references.txt
 	touch author
 	echo $(AUTHOR) > author
+	touch .gitignore
+	echo $(GITIGNORE) > .gitignore
+
+test: all
+	@clear
+	./nm nm
 
 ###############################################################################
 
