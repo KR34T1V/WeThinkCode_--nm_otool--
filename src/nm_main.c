@@ -11,18 +11,39 @@
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
-void print_output(int nsyms, int symoff, int stroff, char *ptr){
-    int i;
-    char *stringtable;
-    struct nlist_64 *array;
 
-    array = (void *)ptr + symoff;
-    stringtable = (void *)ptr + stroff;
+char get_type(struct nlist_64 *symtable){
+    uint8_t type;
+    char tmp;
+    
+    type = symtable->n_type;
+    if (type == N_UNDF)
+        tmp  = 'u'; //undefined
+    if (type == N_ABS)
+        tmp = 'a'; //absolute
+    if (type == N_SECT)
+        //Defined in section number n_sect
+    if (type == N_PBUD)
+        //prebound undefined
+    if (type == N_INDR)
+        //Indirect
+    if (type == N_EXT)
+        tmp = ft_toupper(tmp);
+    
+}
+
+void print_output(struct symtab_command * sym, void *ptr){
+    uint32_t i;
+    char *strtable;
+    struct nlist_64 *symtable;
+
+    symtable = (void *)ptr + sym->symoff;
+    strtable = (void *)ptr + sym->stroff;
 
     i = 0;
-    while (i < nsyms){
-        //ft_printf("Here %s %ld\n", stroff ,array[i].n_un.n_strx);
-        printf("%s\n", stroff + array[i].n_un.n_strx);
+    while (i < sym->nsyms){
+        if (symtable[i].n_un.n_strx) //do not print empty symbols
+            printf("%s\n", strtable + symtable[i].n_un.n_strx);
         i++;
     }
 }
@@ -36,34 +57,40 @@ void handle_64(char *ptr){
 
 
     header = (struct mach_header_64 *)ptr;
-    i = 0;
     ncmds = header->ncmds;
     lc = (void *)ptr + sizeof(*header);
+    i = 0;
     while (i < ncmds){
-        if (lc->cmd == LC_SYMTAB){
+        if (lc->cmd == LC_SYMTAB){ //check command
             sym = (struct symtab_command *) lc;
             ft_printf("symboles = %d\n", sym->nsyms);
-            print_output(sym->nsyms, sym->symoff, sym->stroff, ptr);
+            print_output(sym, ptr);
             break;
         }
-        lc = (void *)lc + lc->cmdsize;
+        //check LC_SEGMENT_64
+        lc = (void *)lc + lc->cmdsize; //move to next command
         i++;
     }
 }
 
-void nm(char *ptr){
+void nm(void *ptr){
     uint32_t magic_number;
 
     magic_number = *(uint32_t *)ptr;
     if (magic_number == MH_MAGIC_64){
-        ft_printf("64\n");
+        ft_printf("64 bit\n");
         handle_64(ptr);
+        //Handle MH_CIGAM_64
+    } else if (magic_number == MH_MAGIC) {
+        ft_printf("32 bit\n");
+        //handle_32
+        //Handle MH_CIGAM
     }
 }
 
 int main(int ac, char **av){
-    int fd;
-    char *ptr;
+    int         fd;
+    void        *ptr;
     struct stat buf;
 
     if (ac != 2){
