@@ -32,7 +32,11 @@ RES_DIR = resources
 
 ###############################################################################
 
-SRC		:= nm_main.c
+SRC		:= nm_main.c\
+			nm_handle_64.c\
+			nm_output.c\
+			nm_parse.c\
+			nm_symbol_type.c
 			
 OBJ		:= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
